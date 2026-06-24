@@ -1,0 +1,10 @@
+{
+  "name": "smart-queue-management-system",
+  "private": true,
+  "scripts": {
+    "build": "npm install --prefix frontend && npm --prefix frontend run build"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
