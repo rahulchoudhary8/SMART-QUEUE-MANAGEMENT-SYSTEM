@@ -259,8 +259,8 @@ app.delete('/api/admin/staff/:sId', authMiddleware, adminOnly, async (req, res) 
 app.get('/api/admin/analytics', authMiddleware, adminOnly, async (req, res) => {
   const { hId, deptId, from, to } = req.query;
   const match = {};
-  if (hId)    match.hospitalId = mongoose.Types.ObjectId(hId);
-  if (deptId) match.deptId     = mongoose.Types.ObjectId(deptId);
+  if (hId)    match.hospitalId = new mongoose.Types.ObjectId(hId);
+  if (deptId) match.deptId     = new mongoose.Types.ObjectId(deptId);
   if (from || to) {
     match.createdAt = {};
     if (from) match.createdAt.$gte = new Date(from);

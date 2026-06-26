@@ -19,7 +19,8 @@ export default function StaffDashboard() {
       fetchQueue(staffData.deptId);
       fetchSummary(staffData.deptId);
 
-      const newSocket = io();
+      const newSocket = io(import.meta.env.VITE_API_URL || window.location.origin);
+      newSocket.emit('join-dept', staffData.deptId);
       newSocket.on('queue-updated', () => {
         fetchQueue(staffData.deptId);
         fetchSummary(staffData.deptId);

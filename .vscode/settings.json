@@ -1,7 +1,0 @@
-{
-  "css.lint.unknownAtRules": "ignore",
-  "css.lint.compatibleVendorPrefixes": "warning",
-  "css.lint.vendorPrefix": "warning",
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
-}

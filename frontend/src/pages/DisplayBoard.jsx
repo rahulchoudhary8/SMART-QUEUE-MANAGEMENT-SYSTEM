@@ -15,22 +15,15 @@ export default function DisplayBoard() {
 
     const fetchQueue = async () => {
       try {
-        const res = await axios.get(`/api/dept/${deptId}/queue`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('hqs_token') || ''}` }
-        });
-        setQueue(res.data);
+        const res = await axios.get(`/api/public/dept/${deptId}/display`);
+        setDeptName(res.data.dept?.name || '');
+        setQueue(res.data.tokens);
 
-        const active = res.data.find(t => t.status === 'active');
+        const active = res.data.tokens.find(t => t.status === 'active');
         setActiveToken(active);
 
-        const waiting = res.data.filter(t => t.status === 'waiting').slice(0, 5);
+        const waiting = res.data.tokens.filter(t => t.status === 'waiting').slice(0, 5);
         setWaitingTokens(waiting);
-
-        if (res.data[0]) {
-          const dept = await axios.get(`/api/dept/${deptId}/summary`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('hqs_token') || ''}` }
-          });
-        }
       } catch (err) {
         console.error('Error fetching queue:', err);
       }
@@ -38,7 +31,8 @@ export default function DisplayBoard() {
 
     fetchQueue();
 
-    const socket = io();
+    const socket = io(import.meta.env.VITE_API_URL || window.location.origin);
+    socket.emit('join-dept', deptId);
     socket.on('queue-updated', fetchQueue);
 
     const interval = setInterval(fetchQueue, 5000);

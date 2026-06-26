@@ -17,7 +17,7 @@ export default function Patient() {
 
   const fetchHospitals = async () => {
     try {
-      const res = await axios.get('/api/hospitals');
+      const res = await axios.get('/api/public/hospitals');
       setHospitals(res.data);
     } catch (err) {
       console.error('Error fetching hospitals:', err);
@@ -31,8 +31,8 @@ export default function Patient() {
     setDepartments([]);
     
     try {
-      const res = await axios.get(`/api/hospital/${hId}/departments`);
-      setDepartments(res.data.filter(d => d.isActive));
+      const res = await axios.get(`/api/public/hospitals/${hId}/departments`);
+      setDepartments(res.data);
     } catch (err) {
       console.error('Error fetching departments:', err);
     }
